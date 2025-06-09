@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Github, Linkedin, Mail, Music, ArrowDown } from "lucide-react";
+import { Moon, Sun, Github, Linkedin, Mail, Music, ArrowDown, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Index = () => {
@@ -163,7 +163,7 @@ const Index = () => {
                 <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-full font-medium shadow-lg">
                   {step}
                 </div>
-                {index < 4 && <ArrowDown className="h-6 w-6 text-muted-foreground mx-4 rotate-90 hidden md:block" />}
+                {index < 4 && <ArrowRight className="h-6 w-6 text-muted-foreground mx-4 hidden md:block" />}
               </div>
             ))}
           </div>
