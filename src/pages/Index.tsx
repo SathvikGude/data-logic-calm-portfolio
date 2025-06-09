@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, Github, Linkedin, Mail, Music, ArrowDown } from "lucide-react";
@@ -6,7 +5,15 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
-  const [isVisible, setIsVisible] = useState({});
+  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({
+    objective: false,
+    skills: false,
+    'data-focus': false,
+    projects: false,
+    timeline: false,
+    hobbies: false,
+    contact: false
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
