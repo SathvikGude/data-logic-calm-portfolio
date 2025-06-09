@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, Github, Linkedin, Mail, Music, ArrowDown, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-
 const Index = () => {
   const [isDark, setIsDark] = useState(false);
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({
@@ -14,45 +13,37 @@ const Index = () => {
     hobbies: false,
     contact: false
   });
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    document.querySelectorAll("section[id]").forEach((section) => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setIsVisible(prev => ({
+            ...prev,
+            [entry.target.id]: true
+          }));
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    document.querySelectorAll("section[id]").forEach(section => {
       observer.observe(section);
     });
-
     return () => observer.disconnect();
   }, []);
-
   const toggleTheme = () => {
     setIsDark(!isDark);
     document.documentElement.classList.toggle("dark");
   };
-
   const scrollToProjects = () => {
-    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("projects")?.scrollIntoView({
+      behavior: "smooth"
+    });
   };
-
-  return (
-    <div className={`min-h-screen transition-colors duration-500 ${isDark ? "dark" : ""}`}>
+  return <div className={`min-h-screen transition-colors duration-500 ${isDark ? "dark" : ""}`}>
       {/* Theme Toggle */}
       <div className="fixed top-6 right-6 z-50">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleTheme}
-          className="bg-background/20 backdrop-blur-md border border-border/20 hover:bg-background/30"
-        >
+        <Button variant="ghost" size="icon" onClick={toggleTheme} className="bg-background/20 backdrop-blur-md border border-border/20 hover:bg-background/30">
           {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
       </div>
@@ -87,11 +78,7 @@ const Index = () => {
           </div>
 
           {/* CTA Button */}
-          <Button
-            onClick={scrollToProjects}
-            size="lg"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-fade-in delay-1000"
-          >
+          <Button onClick={scrollToProjects} size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-fade-in delay-1000">
             Explore My Work
             <ArrowDown className="ml-2 h-5 w-5 animate-bounce" />
           </Button>
@@ -124,28 +111,35 @@ const Index = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { title: "Programming", skills: ["Python", "Java", "C", "SQL"], color: "from-blue-500 to-cyan-500" },
-              { title: "Big Data", skills: ["Hadoop", "Hive", "Spark"], color: "from-purple-500 to-pink-500" },
-              { title: "Tools", skills: ["Power BI", "Tableau"], color: "from-green-500 to-emerald-500" },
-              { title: "Soft Skills", skills: ["Leadership", "Communication", "Project Management"], color: "from-orange-500 to-red-500" }
-            ].map((category, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-background/60 backdrop-blur-sm border-border/20">
+            {[{
+            title: "Programming",
+            skills: ["Python", "Java", "C", "SQL"],
+            color: "from-blue-500 to-cyan-500"
+          }, {
+            title: "Big Data",
+            skills: ["Hadoop", "Hive", "Spark"],
+            color: "from-purple-500 to-pink-500"
+          }, {
+            title: "Tools",
+            skills: ["Power BI", "Tableau"],
+            color: "from-green-500 to-emerald-500"
+          }, {
+            title: "Soft Skills",
+            skills: ["Leadership", "Communication", "Project Management"],
+            color: "from-orange-500 to-red-500"
+          }].map((category, index) => <Card key={index} className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-background/60 backdrop-blur-sm border-border/20">
                 <CardContent className="p-6">
                   <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${category.color} mb-4 flex items-center justify-center`}>
                     <div className="w-6 h-6 bg-white rounded opacity-80"></div>
                   </div>
                   <h3 className="text-xl font-semibold mb-4">{category.title}</h3>
                   <div className="space-y-2">
-                    {category.skills.map((skill, skillIndex) => (
-                      <span key={skillIndex} className="inline-block bg-muted px-3 py-1 rounded-full text-sm mr-2 mb-2">
+                    {category.skills.map((skill, skillIndex) => <span key={skillIndex} className="inline-block bg-muted px-3 py-1 rounded-full text-sm mr-2 mb-2">
                         {skill}
-                      </span>
-                    ))}
+                      </span>)}
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -158,14 +152,12 @@ const Index = () => {
           </h2>
           
           <div className="flex flex-wrap justify-center items-center gap-4 mb-12">
-            {["Raw Data", "Cleaning", "Transformation", "Visualization", "Decision Support"].map((step, index) => (
-              <div key={index} className="flex items-center">
+            {["Raw Data", "Cleaning", "Transformation", "Visualization", "Decision Support"].map((step, index) => <div key={index} className="flex items-center">
                 <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-full font-medium shadow-lg">
                   {step}
                 </div>
                 {index < 4 && <ArrowRight className="h-6 w-6 text-muted-foreground mx-4 hidden md:block" />}
-              </div>
-            ))}
+              </div>)}
           </div>
           
           <p className="text-xl text-muted-foreground italic max-w-2xl mx-auto">
@@ -182,33 +174,28 @@ const Index = () => {
           </h2>
           
           <div className="grid lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Heart Simulation",
-                subtitle: "Educational Tech",
-                icon: "🫀",
-                description: "Built an interactive simulation based on the 10th-grade NCERT science curriculum. The project visually demonstrates heart anatomy and blood flow, helping school students understand the concept through animation.",
-                purpose: "Visual learning for high school education",
-                tools: "Python + animation"
-              },
-              {
-                title: "Survey Data Analysis",
-                subtitle: "Power BI",
-                icon: "📊",
-                description: "Led survey analysis on village cleanliness, well-being, and education. Designed interactive dashboards to visualize trends and key findings, highlighting real-world community insights.",
-                purpose: "Social impact through data",
-                tools: "Excel, Power BI"
-              },
-              {
-                title: "Sentiment Analysis",
-                subtitle: "NLP",
-                icon: "💬",
-                description: "Developed a text-based sentiment classifier to detect emotional tone in customer reviews and feedback. Implemented preprocessing, feature extraction, and sentiment modeling for classification.",
-                purpose: "Extract meaning from language",
-                tools: "Python, NLTK, TextBlob"
-              }
-            ].map((project, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 bg-background/80 backdrop-blur-sm border-border/20">
+            {[{
+            title: "Heart Simulation",
+            subtitle: "Educational Tech",
+            icon: "🫀",
+            description: "Built an interactive simulation based on the 10th-grade NCERT science curriculum. The project visually demonstrates heart anatomy and blood flow, helping school students understand the concept through animation.",
+            purpose: "Visual learning for high school education",
+            tools: "Python + animation"
+          }, {
+            title: "Survey Data Analysis",
+            subtitle: "Power BI",
+            icon: "📊",
+            description: "Led survey analysis on village cleanliness, well-being, and education. Designed interactive dashboards to visualize trends and key findings, highlighting real-world community insights.",
+            purpose: "Social impact through data",
+            tools: "Excel, Power BI"
+          }, {
+            title: "Sentiment Analysis",
+            subtitle: "NLP",
+            icon: "💬",
+            description: "Developed a text-based sentiment classifier to detect emotional tone in customer reviews and feedback. Implemented preprocessing, feature extraction, and sentiment modeling for classification.",
+            purpose: "Extract meaning from language",
+            tools: "Python, NLTK, TextBlob"
+          }].map((project, index) => <Card key={index} className="group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 bg-background/80 backdrop-blur-sm border-border/20">
                 <CardContent className="p-8">
                   <div className="text-4xl mb-4">{project.icon}</div>
                   <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
@@ -225,8 +212,7 @@ const Index = () => {
                     </div>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -241,13 +227,27 @@ const Index = () => {
           <div className="relative">
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
             
-            {[
-              { icon: "🎓", title: "Graduated", description: "KL University, 2025", side: "left" },
-              { icon: "📈", title: "Major Projects", description: "Heart Simulation, Survey Analysis, Sentiment Analysis", side: "right" },
-              { icon: "💼", title: "Job Offer", description: "C5i, Coimbatore", side: "left" },
-              { icon: "🎯", title: "Road Ahead", description: "To grow in Data Engineering & Analysis, aiming to launch a startup in future", side: "right" }
-            ].map((item, index) => (
-              <div key={index} className={`relative flex ${item.side === "left" ? "justify-start" : "justify-end"} mb-12`}>
+            {[{
+            icon: "🎓",
+            title: "Graduated",
+            description: "KL University, 2025",
+            side: "left"
+          }, {
+            icon: "📈",
+            title: "Major Projects",
+            description: "Heart Simulation, Survey Analysis, Sentiment Analysis",
+            side: "right"
+          }, {
+            icon: "💼",
+            title: "Job Offer",
+            description: "C5i, Coimbatore",
+            side: "left"
+          }, {
+            icon: "🎯",
+            title: "Road Ahead",
+            description: "To grow in Data Engineering & Analysis, aiming to launch a startup in future",
+            side: "right"
+          }].map((item, index) => <div key={index} className={`relative flex ${item.side === "left" ? "justify-start" : "justify-end"} mb-12`}>
                 <div className={`w-5/12 ${item.side === "left" ? "text-right pr-8" : "text-left pl-8"}`}>
                   <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-lg">
                     <CardContent className="p-6">
@@ -259,8 +259,7 @@ const Index = () => {
                 </div>
                 
                 <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-background shadow-lg"></div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -289,31 +288,25 @@ const Index = () => {
           </h2>
           
           <div className="flex justify-center gap-8 mb-12">
-            {[
-              { icon: Linkedin, href: "https://www.linkedin.com/in/sathvik-gude-894a61239/", label: "LinkedIn" },
-              { icon: Github, href: "http://github.com/SathvikGude", label: "GitHub" },
-              { icon: Mail, href: "mailto:sathvikgude347@gmail.com", label: "Email" }
-            ].map((contact, index) => (
-              <a
-                key={index}
-                href={contact.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group p-4 bg-background/60 backdrop-blur-sm border border-border/20 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-              >
+            {[{
+            icon: Linkedin,
+            href: "https://www.linkedin.com/in/sathvik-gude-894a61239/",
+            label: "LinkedIn"
+          }, {
+            icon: Github,
+            href: "http://github.com/SathvikGude",
+            label: "GitHub"
+          }, {
+            icon: Mail,
+            href: "mailto:sathvikgude347@gmail.com",
+            label: "Email"
+          }].map((contact, index) => <a key={index} href={contact.href} target="_blank" rel="noopener noreferrer" className="group p-4 bg-background/60 backdrop-blur-sm border border-border/20 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <contact.icon className="h-8 w-8 mx-auto mb-2 group-hover:text-blue-500 transition-colors" />
                 <span className="text-sm font-medium">{contact.label}</span>
-              </a>
-            ))}
+              </a>)}
           </div>
           
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-          >
-            Let's Connect
-            <div className="ml-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-          </Button>
+          
         </div>
       </section>
 
@@ -325,8 +318,6 @@ const Index = () => {
           </p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
